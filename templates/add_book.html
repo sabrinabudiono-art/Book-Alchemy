@@ -14,6 +14,19 @@
   <input type="text" id="title" name="title" required><br><br>
   <label for="publication_year">Publication Year:</label>
   <input type="text" id="publication_year" name="publication_year"><br><br>
+  {% if authors %}
+    <label for="author">Author:</label>
+    <select id="author" name="author_id" required>
+        <option value="" disabled selected>Select an author</option>
+        {% for author in authors %}
+            <option value="{{ author.author_id }}">
+                {{ author.author_name }}
+            </option>
+        {% endfor %}
+    </select>
+{% else %}
+    <p>No authors available. Please add an author first.</p>
+{% endif %}
   <input type="submit" value="Add Book">
   </form>
 

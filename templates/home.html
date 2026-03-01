@@ -1,16 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8">
+    <title>Book Library</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  </head>
-  <body>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
 
-    {% for book in books %}
-    <div> <h3>{{ book.title }}</h3>
-    </div>
-    {% endfor %}
+    <header class="page-header">
+        <h1>📚 Book Library</h1>
+    </header>
 
-  </body>
+    <main class="books-container">
+        {% for book, author in books_author_tuple %}
+        <div class="book-card">
+            <div class="image-container">
+                <img
+                    src="https://covers.openlibrary.org/b/isbn/{{ book.book_isbn }}-M.jpg"
+                    alt="{{ book.book_title }} cover">
+            </div>
+            <div class="book-info">
+                <h3>{{ book.book_title }}</h3>
+                <p class="author-name">{{ author.author_name }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </main>
+
+</body>
 </html>
