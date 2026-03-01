@@ -62,19 +62,6 @@ def add_book():
     authors = Author.query.all()
     return render_template('add_book.html', authors=authors)
 
-@app.route('/api/posts/search', methods=['GET'])
-def search_post():
-    title_query = request.args.get('title')
-    content_query = request.args.get('content')
-    if title_query:
-        result = [post for post in POSTS if title_query.lower() in post['title'].lower()]
-        query_result = result
-    if content_query:
-        result = [post for post in POSTS if content_query.lower() in post['content'].lower()]
-        query_result = result
-
-    return jsonify(query_result), 200
-
 
 #with app.app_context():
 #   db.create_all()
