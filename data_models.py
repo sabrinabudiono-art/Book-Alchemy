@@ -1,17 +1,13 @@
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import create_engine, Column, Integer, String, ForeignKey
-from sqlalchemy.orm import declarative_base, sessionmaker
+from sqlalchemy import Column, Integer, String, ForeignKey
 
 db = SQLAlchemy()
 
-# Create a database connection
-engine = create_engine('sqlite:///data/library.sqlite')
-
-# Create a database session
-Session = sessionmaker(bind=engine)
-session = Session()
 
 class Author(db.Model):
+    """
+        Represents an author in the library.
+    """
     __tablename__ = 'authors'
 
     author_id = Column(Integer, primary_key=True, autoincrement=True)
@@ -22,7 +18,11 @@ class Author(db.Model):
     def __str__(self):
         return f"Author(author_id = {self.author_id}, name = {self.author_name})"
 
+
 class Book(db.Model):
+    """
+        Represents a book in the library.
+    """
     __tablename__ = 'book'
 
     book_id = Column(Integer, primary_key=True, autoincrement=True)
@@ -34,6 +34,3 @@ class Book(db.Model):
 
     def __str__(self):
         return f"Book(book_id = {self.book_id}, title = {self.book_title})"
-
-karel = Author(author_name='Karel', author_date_of_birth="24 November 1999")
-harry_potter = Book(book_isbn=123, book_title="Harry Potter", book_publication_year=1990, author_id=karel.author_id)
