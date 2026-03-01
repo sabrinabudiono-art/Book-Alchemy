@@ -12,11 +12,26 @@ db.init_app(app)
 
 @app.route('/')
 def home():
-    books_author_tuple = db.session.query(Book, Author) \
-        .join(Author, Book.author_id == Author.author_id) \
-        .all()
-    return render_template('home.html', books_author_tuple=books_author_tuple)
+    sort = request.args.get("sort", "title")
 
+    if sort == "author":
+        books_author_tuple = (
+            db.session.query(Book, Author)
+            .join(Author)
+            .order_by(Author.author_name.asc())
+            .all()
+        )
+    else:
+        books_author_tuple = (
+            db.session.query(Book, Author)
+            .join(Author)
+            .order_by(Book.book_title.asc())
+            .all()
+        )
+
+    return render_template("home.html",
+                           books_author_tuple=books_author_tuple,
+                           current_sort=sort)
 
 @app.route('/add_author', methods=['GET', 'POST'])
 def add_author():
@@ -46,6 +61,19 @@ def add_book():
         return redirect(url_for('home'))
     authors = Author.query.all()
     return render_template('add_book.html', authors=authors)
+
+@app.route('/api/posts/search', methods=['GET'])
+def search_post():
+    title_query = request.args.get('title')
+    content_query = request.args.get('content')
+    if title_query:
+        result = [post for post in POSTS if title_query.lower() in post['title'].lower()]
+        query_result = result
+    if content_query:
+        result = [post for post in POSTS if content_query.lower() in post['content'].lower()]
+        query_result = result
+
+    return jsonify(query_result), 200
 
 
 #with app.app_context():

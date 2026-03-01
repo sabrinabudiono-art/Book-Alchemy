@@ -79,3 +79,28 @@ body {
     font-size: 0.9rem;
     color: #777;
 }
+
+.sort-bar {
+    display: flex;
+    justify-content: flex-end;
+    padding: 1rem 2rem;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.sort-bar form {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.sort-bar label {
+    font-weight: 600;
+}
+
+.sort-bar select {
+    padding: 0.4rem 0.6rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+}

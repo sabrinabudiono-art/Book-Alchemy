@@ -12,6 +12,20 @@
         <h1>📚 Book Library</h1>
     </header>
 
+    <div class="sort-bar">
+    <form method="GET" action="/">
+        <label for="sort">Sort by:</label>
+        <select name="sort" id="sort" onchange="this.form.submit()">
+            <option value="title" {% if current_sort == 'title' %}selected{% endif %}>
+                Title (A–Z)
+            </option>
+            <option value="author" {% if current_sort == 'author' %}selected{% endif %}>
+                Author (A–Z)
+            </option>
+        </select>
+    </form>
+</div>
+
     <main class="books-container">
         {% for book, author in books_author_tuple %}
         <div class="book-card">
